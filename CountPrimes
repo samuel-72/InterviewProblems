@@ -1,0 +1,20 @@
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        # The algorithm itself is Sieve of Eratosthenes 
+        """
+        if n <= 2:
+            return 0
+        elif n == 3:
+            return 1
+        list_of_primes = []
+        nos = [True] * n
+        nos[0] = nos[1] = False
+        for i, no in enumerate(nos):
+            if no:
+                list_of_primes.append(i) # If asked to return the primes, then yield here
+                for divident in range(i**2, n, i): # Increment in terms of i rather than 1
+                    nos[divident] = False
+        return(len(list_of_primes))
