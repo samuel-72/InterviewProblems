@@ -18,9 +18,9 @@ def get_quotient(dividend, divisor):
       quotient = quotient | 1 << i
   return quotient
   
-  def test_get_quotient():
-    assert(get_quotient(11438461287,3132976) == 3650)
-    assert(get_quotient(100,3) == 33)
+def test_get_quotient():
+  assert(get_quotient(11438461287,3132976) == 3650)
+  assert(get_quotient(100,3) == 33)
     
-  if __name__ == "__main__":
-    test_get_quotient()
+if __name__ == "__main__":
+  test_get_quotient()
