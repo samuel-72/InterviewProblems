@@ -35,6 +35,8 @@ class Solution:
 def test(A, expected_output):
     s = Solution() 
     assert s.minFallingPathSum(A) == expected_output
+    print("Input : %s\nOutput : %s\t\tExpected Output : %s\n\n" % (A,
+        s.minFallingPathSum(A), expected_output))
 
 
 def main():
@@ -86,6 +88,7 @@ For approach 2, this is a working solution:
             min_paths = [ [A[R][C] if R == 0 else None for C in range(c)] for R in range(r)] #The very 1st row would have nothing above it hence we can copy it over directly.
             for row in range(1,r):
                 for col in range(c):
+                    # If col < 0 or col > No of cols dont consider
                     min_paths[row][col] = min([ min_paths[row-1][new_col] for new_col in range(col-1, col+2) if row - 1 > -1 and new_col > -1 and new_col < c ]) + A[row][col]    
             return min(min_paths[r-1])
 """
