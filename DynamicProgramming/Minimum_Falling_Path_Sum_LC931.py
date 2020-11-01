@@ -46,3 +46,46 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    
+    
+"""
+Intuition:
+
+Consider this matrix:
+
+[
+    1       2       3
+    4       5       6
+    7       8       9
+]
+
+From eyeballing it, its fairly easy to see that the 1st column in each row is the smallest value in each row and as long as we pick that we should end up with the smallest sum.
+But picking the smallest value from each row is not sufficient, because a row further down the lane might have another column which was not choosen in this path but would have had the minumum sum. Consider the below example:
+
+[
+    1       2       3
+    4       5       6           # If you pick 4 here then in the next row you can only pick either 7 or 8 and thereby miss out the -100
+    7       8       -100
+]
+
+This effectively means a couple of things:
+1. One could parse through all possible paths and find all their sums and pick the least from it. Some paths would repeat, ergo lets add memoization to remember the answer for a path and reuse it.
+2. For each row,
+    For each col,
+        Find the path with minimum sum encountered so far, 
+   When you reach the last row, last col, find the minumum you have seen in the last row and that is your answer
+   
+Code:
+For approach 1, the code is as given above.
+For approach 2, this is a working solution:
+
+    class Solution:
+        def minFallingPathSum(self, A: List[List[int]]) -> int:
+            r,c = len(A), len(A[0])
+            min_paths = [ [A[R][C] if R == 0 else None for C in range(c)] for R in range(r)] #The very 1st row would have nothing above it hence we can copy it over directly.
+            for row in range(1,r):
+                for col in range(c):
+                    min_paths[row][col] = min([ min_paths[row-1][new_col] for new_col in range(col-1, col+2) if row - 1 > -1 and new_col > -1 and new_col < c ]) + A[row][col]    
+            return min(min_paths[r-1])
+"""
